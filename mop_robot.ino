@@ -1,3 +1,7 @@
+#include <Wire.h>
+#include <Adafruit_Sensor.h>
+#include <Adafruit_ADXL345_U.h>
+
 # define wheelDiameter 7
 # define noOfStripesOnWheel 8
 # define DistanceBetweenWheels 31.5
@@ -33,22 +37,22 @@ char layout[100][100];
 
 
 void setup() {
-  Serial.begin(9600);
-  pinMode(leftMotorEncoder, INPUT_PULLUP);
-  pinMode(rightMotorEncoder, INPUT);
+    Serial.begin(9600);
+    pinMode(leftMotorEncoder, INPUT_PULLUP);
+    pinMode(rightMotorEncoder, INPUT);
 
-  pinMode(obstructionSensor, INPUT);
+    pinMode(obstructionSensor, INPUT);
 
-  pinMode(leftMotorF, OUTPUT);
-  pinMode(leftMotorB, OUTPUT);
-  pinMode(rightMotorF, OUTPUT);
-  pinMode(rightMotorB, OUTPUT);
-  pinMode(leftMotorEnable, OUTPUT);
-  pinMode(rightMotorEnable, OUTPUT);
-  setMotorSpeed(regularSpeed, regularSpeed);
+    pinMode(leftMotorF, OUTPUT);
+    pinMode(leftMotorB, OUTPUT);
+    pinMode(rightMotorF, OUTPUT);
+    pinMode(rightMotorB, OUTPUT);
+    pinMode(leftMotorEnable, OUTPUT);
+    pinMode(rightMotorEnable, OUTPUT);
+    setMotorSpeed(regularSpeed, regularSpeed);
 
-  delay(1000);
-  moveDistance(100);
+    delay(1000);
+    moveDistance(100);
 }
 
 void loop() {
