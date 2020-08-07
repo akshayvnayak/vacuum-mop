@@ -1,6 +1,3 @@
-#include <Wire.h>
-#include <Adafruit_Sensor.h>
-#include <Adafruit_ADXL345_U.h>
 
 # define wheelDiameter 7
 # define noOfStripesOnWheel 8
