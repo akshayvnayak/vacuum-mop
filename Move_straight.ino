@@ -4,8 +4,8 @@ bool moveDistance(float distance)
 
 
   unsigned long previousTime = 0;
-  int leftMotorFlag = 0;
-  int rightMotorFlag = 0;
+  bool leftMotorFlag = 1;
+  bool rightMotorFlag = 1;
   int leftCompletedSteps = 0;
   int rightCompletedSteps = 0;
   float noOfSteps = distanceToSteps(distance);
@@ -25,36 +25,43 @@ bool moveDistance(float distance)
       halt();
       return 0;
     }
-    if (millis() > previousTime + 10)
+    if (millis() > previousTime + 5)
     {
       count++;
       if (leftMotorFlag == 0 && digitalRead(leftMotorEncoder) == 1)
         leftCompletedSteps++;
       if (rightMotorFlag == 0 && digitalRead(rightMotorEncoder) == 1)
         rightCompletedSteps++;
+      error = leftCompletedSteps - rightCompletedSteps;
+      if(error>0)
+        analogWrite(leftMotorEnable,regularSpeed - error * Kp );
+      if(error<0)
+        analogWrite(rightMotorEnable,regularSpeed + error * Kp );
 
-      if (count > 3)
-      {
-        count = 0;
-        error = leftCompletedSteps - rightCompletedSteps;
-        integral += error;
-        difference = error - lastError;
-        pidError = error * Kp + integral * Ki + difference * Kd;
-        lastError = error;
-        //        if (pidError > 0)
-        setMotorSpeed( regularSpeed - pidError, regularSpeed + pidError);
-        //        else
-        //          setMotorSpeed( 255, 255 + pidError);
-      }
+      setMotorSpeed( regularSpeed - error * Kp, regularSpeed + error * Kp);
+
+      //      if (count > -1)
+      //      {
+      //        count = 0;
+      //        error = leftCompletedSteps - rightCompletedSteps;
+      //        integral += error;
+      //        difference = error - lastError;
+      //        pidError = error * Kp + integral * Ki + difference * Kd;
+      //        lastError = error;
+      //        //        if (pidError > 0)
+      //        setMotorSpeed( regularSpeed - pidError, regularSpeed + pidError);
+      //        //        else
+      //        //          setMotorSpeed( 255, 255 + pidError);
+      //      }
       leftMotorFlag = digitalRead(leftMotorEncoder);
       rightMotorFlag = digitalRead(rightMotorEncoder);
 
       previousTime = millis();
-      Serial.print(leftCompletedSteps);
-      Serial.print("\t");
-      Serial.print(pidError);
-      Serial.print("\t");
-      Serial.println(rightCompletedSteps);
+            Serial.print(leftCompletedSteps);
+            Serial.print("\t");
+//            Serial.print(pidError);
+//            Serial.print("\t");
+            Serial.println(rightCompletedSteps);
     }
   }
   halt();

@@ -1,5 +1,6 @@
 {
     "board": "arduino:avr:uno",
     "programmer": "AVRISP mkII",
-    "sketch": "mop_robot.ino"
+    "sketch": "mop_robot.ino",
+    "port": "COM4"
 }

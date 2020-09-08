@@ -1,18 +1,17 @@
-
 # define wheelDiameter 7
-# define noOfStripesOnWheel 8
+# define noOfStripesOnWheel 420
 # define DistanceBetweenWheels 31.5
 
 
-# define regularSpeed 200
+# define regularSpeed 210
 # define minSpeed 100
 
 # define Kp 20
 # define Ki 1
 # define Kd 20
 
-const int leftMotorEncoder = 2;
-const int rightMotorEncoder = 3;
+const int leftMotorEncoder = 3;
+const int rightMotorEncoder = 2;
 
 const int obstructionSensor = 4;
 
@@ -49,7 +48,7 @@ void setup() {
     setMotorSpeed(regularSpeed, regularSpeed);
 
     delay(1000);
-    moveDistance(100);
+    moveDistance(110);
 }
 
 void loop() {
