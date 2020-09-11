@@ -17,6 +17,8 @@ inline bool checkObstruction()
 ////  Serial.print("\t");
 ////  Serial.println(rightMotorSpeed < minSpeed ? minSpeed : (rightMotorSpeed > 255) ? 255 : rightMotorSpeed);
 //}
+
+
 void setMotorSpeed ( int leftMotorSpeed, int rightMotorSpeed)
 {
   analogWrite( leftMotorEnable, leftMotorSpeed);
@@ -26,16 +28,4 @@ void setMotorSpeed ( int leftMotorSpeed, int rightMotorSpeed)
   Serial.print(leftMotorSpeed);
   Serial.print("\t");
   Serial.println(rightMotorSpeed);
-}
-
-void attachInterrupts()
-{
-  attachInterrupt(digitalPinToInterrupt(leftMotorEncoder), leftInterrupt, FALLING);
-  attachInterrupt(digitalPinToInterrupt(rightMotorEncoder), rightInterrupt, FALLING);
-}
-
-void detachInterrupts()
-{
-  detachInterrupt(digitalPinToInterrupt(leftMotorEncoder));
-  detachInterrupt(digitalPinToInterrupt(rightMotorEncoder));
 }

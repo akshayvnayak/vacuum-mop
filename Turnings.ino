@@ -1,22 +1,49 @@
+int sharpRightTurn(int degree)
+{
+  int noOfSteps = distanceToSteps(degree * (PI / 180) * DistanceBetweenWheels / 2);
+  leftCompletedSteps = 0;
+  rightCompletedSteps = 0;
+  sharpRight();
+
+  pidMovement(noOfSteps);
+  
+  halt();
+  return 1;
+}
+
+
+
+
+
+
 int rightTurn(int degree)
 {
-  int noOfTurns = distanceToSteps(degree * (PI / 180) * DistanceBetweenWheels);
-  unsigned long previousTime = 0;
-  int flag = 0;
-  int rotationNumber = 0;
+  leftCompletedSteps = 0;
+  rightCompletedSteps = 0;
+
+  int noOfSteps = distanceToSteps(degree * (PI / 180) * DistanceBetweenWheels);
+
   right();
-  while (rotationNumber < noOfTurns)
-  {
-    if (millis() > previousTime + 10)
-    {
-      if (flag == 0 && digitalRead(leftMotorEncoder) == 1)
-        rotationNumber++;
-      flag = digitalRead(leftMotorEncoder);
-      previousTime = millis();
-    }
-    Serial.print(flag);
-    Serial.println(rotationNumber);
-  }
+  while (leftCompletedSteps < noOfSteps)
+    Serial.println(leftCompletedSteps);
+
+
+  //  unsigned long previousTime = 0;
+  //  int flag = 0;
+  //  int rotationNumber = 0;
+  //  right();
+  //  while (rotationNumber < noOfTurns)
+  //  {
+  //    if (millis() > previousTime + 10)
+  //    {
+  //      if (flag == 0 && digitalRead(leftMotorEncoder) == 1)
+  //        rotationNumber++;
+  //      flag = digitalRead(leftMotorEncoder);
+  //      previousTime = millis();
+  //    }
+  //    Serial.print(flag);
+  //    Serial.println(rotationNumber);
+  //  }
   halt();
   return 1;
 }

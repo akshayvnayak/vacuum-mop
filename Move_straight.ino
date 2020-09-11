@@ -1,17 +1,26 @@
 bool moveDistance(float distance)
 {
   float noOfSteps = distanceToSteps(distance);
+
+  leftCompletedSteps = 0;
+  rightCompletedSteps = 0;
+
+  setMotorSpeed(regularSpeed, regularSpeed);
+  straight();
+
+  pidMovement(noOfSteps);
+  
+  halt();
+  return 1;
+}
+
+int pidMovement(int noOfSteps)
+{
   int error = 0;
   int pidError = 0;
   int lastError = 0;
   int integral = 0;
   int difference = 0;
-  
-  leftCompletedSteps = 0;
-  rightCompletedSteps = 0;
-  
-  setMotorSpeed(regularSpeed, regularSpeed);
-  straight();
   
   while (leftCompletedSteps < noOfSteps || rightCompletedSteps < noOfSteps)
   {
@@ -22,7 +31,7 @@ bool moveDistance(float distance)
     //      return 0;
     //    }
 
-////////////////////// PID 
+    ////////////////////// PID
     error = leftCompletedSteps - rightCompletedSteps;
     integral += error;
     difference = error - lastError;
@@ -33,8 +42,6 @@ bool moveDistance(float distance)
     if (pidError < 0)
       setMotorSpeed( regularSpeed, regularSpeed + pidError);
 
-
-      
     Serial.print(leftCompletedSteps);
     Serial.print("\t");
     Serial.print(rightCompletedSteps);
@@ -42,6 +49,4 @@ bool moveDistance(float distance)
     Serial.println(pidError);
 
   }
-  halt();
-  return 1;
 }

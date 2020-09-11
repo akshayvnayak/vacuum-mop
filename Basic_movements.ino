@@ -24,6 +24,14 @@ void left()
   digitalWrite(rightMotorB,LOW);
   digitalWrite(rightMotorF,HIGH);
 }
+void sharpLeft()
+{
+  Serial.println("Sharp Left");
+  digitalWrite(leftMotorF,LOW);
+  digitalWrite(leftMotorB,HIGH);
+  digitalWrite(rightMotorB,LOW);
+  digitalWrite(rightMotorF,HIGH);
+}
 
 void right()
 {
@@ -34,6 +42,14 @@ void right()
   digitalWrite(rightMotorB,LOW);
 }
 
+void sharpRight()
+{
+  Serial.println("Sharp Right");
+  digitalWrite(leftMotorB,LOW);
+  digitalWrite(leftMotorF,HIGH);
+  digitalWrite(rightMotorF,LOW);
+  digitalWrite(rightMotorB,HIGH);
+}
 void halt()
 {
   Serial.println("Halt");
