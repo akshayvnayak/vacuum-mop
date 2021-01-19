@@ -1,18 +1,28 @@
 int sharpRightTurn(int degree)
 {
-  int noOfSteps = distanceToSteps(degree * (PI / 180) * DistanceBetweenWheels / 2);
   leftCompletedSteps = 0;
   rightCompletedSteps = 0;
   sharpRight();
 
-  pidMovement(noOfSteps);
-  
+  pidMovement(distanceToSteps(degree * (PI / 180) * DistanceBetweenWheels / 2));
+
   halt();
+  updateDirection(degree);
   return 1;
 }
 
+int sharpLeftTurn(int degree)
+{
+  leftCompletedSteps = 0;
+  rightCompletedSteps = 0;
+  sharpLeft();
 
+  pidMovement(distanceToSteps(degree * (PI / 180) * DistanceBetweenWheels / 2));
 
+  halt();
+  updateDirection(-degree);
+  return 1;
+}
 
 
 

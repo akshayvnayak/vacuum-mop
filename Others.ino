@@ -19,7 +19,7 @@ inline bool checkObstruction()
 //}
 
 
-void setMotorSpeed ( int leftMotorSpeed, int rightMotorSpeed)
+inline void setMotorSpeed ( int leftMotorSpeed, int rightMotorSpeed)
 {
   analogWrite( leftMotorEnable, leftMotorSpeed);
   analogWrite(rightMotorEnable, rightMotorSpeed);

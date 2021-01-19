@@ -1,7 +1,8 @@
+# include <SoftwareSerial.h>
+
 # define wheelDiameter 6.85
 # define noOfPulsesPerRevolution 420
 # define DistanceBetweenWheels 21.2
-
 
 # define regularSpeed 255
 //# define minSpeed 100
@@ -13,7 +14,7 @@
 const int leftMotorEncoder = 3;
 const int rightMotorEncoder = 2;
 
-const int obstructionSensor = 4;
+const int obstructionSensor = 12;
 
 const int leftMotorF = 10; // 7 of l293d
 const int leftMotorB = 11; // 2 of l293d
@@ -24,13 +25,32 @@ const int rightMotorB = 8; // 10 of l293d
 const int leftMotorEnable = 6;
 const int rightMotorEnable = 5;
 
-int leftCompletedSteps = 0;
-int rightCompletedSteps = 0;
+volatile unsigned int leftCompletedSteps = 0;
+volatile unsigned int rightCompletedSteps = 0;
 
 //////////////Path planning
 
-char layout[150][200];
 
+//class layout
+//{
+//    byte * a;
+//    byte * b;
+//  public:
+//    layout(int x,int y)
+//    {
+//      a=new byte[x][y];
+//      b= new byte[x][y];
+//    }
+//    
+//
+//};
+//
+//volatile char layout[53/8][31/8];
+byte x = 0, y = 0;
+
+byte currentDirection=0;
+volatile bool layout[8][14];
+SoftwareSerial MyBlue(2, 3);
 
 
 void setup() {
@@ -38,7 +58,7 @@ void setup() {
   pinMode(leftMotorEncoder, INPUT_PULLUP);
   pinMode(rightMotorEncoder, INPUT_PULLUP);
 
-  pinMode(obstructionSensor, INPUT);
+  pinMode(obstructionSensor, INPUT_PULLUP);
 
   pinMode(leftMotorF, OUTPUT);
   pinMode(leftMotorB, OUTPUT);
@@ -49,9 +69,11 @@ void setup() {
   setMotorSpeed(regularSpeed, regularSpeed);
   attachInterrupts();
   delay(1000);
- 
-  sharpRightTurn(180);
-//  moveDistance(110);
+
+  //  sharpRightTurn(180);
+  moveDistance(100);
+
+  designLayout();
 }
 
 void loop() {
